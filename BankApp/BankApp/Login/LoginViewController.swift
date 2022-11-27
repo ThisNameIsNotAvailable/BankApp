@@ -7,6 +7,14 @@
 
 import UIKit
 
+protocol LogoutDelegate: AnyObject {
+   func didLogout()
+}
+
+protocol LoginViewControllerDelegate: AnyObject {
+    func didLogin()
+}
+
 class LoginViewController: UIViewController {
 
     private let loginView = LoginView()
@@ -14,6 +22,8 @@ class LoginViewController: UIViewController {
     private let errorMessageLabel = UILabel()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
+    
+    weak var delegate: LoginViewControllerDelegate?
     
     private var username: String? {
         return loginView.usernameTextField.text
@@ -27,6 +37,12 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         style()
         layout()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        signInButton.configuration?.showsActivityIndicator = false
+        loginView.usernameTextField.text = ""
+        loginView.passwordTextField.text = ""
     }
 }
 
@@ -112,8 +128,9 @@ extension LoginViewController {
             return
         }
         
-        if username == "Alex" && password == "password" {
+        if username == "a" && password == "a" {
             signInButton.configuration?.showsActivityIndicator = true
+            delegate?.didLogin()
         } else {
             configureView(with: "Incorrect username/password.")
         }
