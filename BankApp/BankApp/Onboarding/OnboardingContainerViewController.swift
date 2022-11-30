@@ -11,26 +11,23 @@ protocol OnboardingContainerViewControllerDelegate: AnyObject {
     func didFinishOnboarding()
 }
 class OnboardingContainerViewController: UIViewController {
+    private let scrollView = UIScrollView()
+    private let stackViewContainer = UIStackView()
+    var pages = [UIView]()
     
-    let pageViewController: UIPageViewController
-    var pages = [UIViewController]()
-    var currentVC: UIViewController
-    let closeButton = UIButton(type: .system)
+    private let closeButton = UIButton(type: .system)
     
     weak var delegate: OnboardingContainerViewControllerDelegate?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         
-        let page1 = OnboardingViewController(titleText: "Bankey is faster, easier to use, and has a brand new look and feel that will make you feel like you are back in 1989.", imageName: "delorean")
-        let page2 = OnboardingViewController(titleText: "Move your money around the world quickly and securely.", imageName: "world")
-        let page3 = OnboardingViewController(titleText: "Learn more at www.bankey.com.", imageName: "thumbs")
+        let page1 = OnboardingView(titleText: "Bankey is faster, easier to use, and has a brand new look and feel that will make you feel like you are back in 1989.", imageName: "delorean")
+        let page2 = OnboardingView(titleText: "Move your money around the world quickly and securely.", imageName: "world")
+        let page3 = OnboardingView(titleText: "Learn more at www.bankey.com.", imageName: "thumbs", isDoneButtonPresent: true)
         
         pages.append(page1)
         pages.append(page2)
         pages.append(page3)
-        
-        currentVC = pages.first!
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -43,74 +40,68 @@ class OnboardingContainerViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
-        
-        setup()
         style()
+        setup()
         layout()
         
+        guard let page = pages[2] as? OnboardingView else{
+            return
+        }
         
-    }
-}
-
-// MARK: - UIPageViewControllerDataSource
-extension OnboardingContainerViewController: UIPageViewControllerDataSource {
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        return getPreviousViewController(from: viewController)
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        return getNextViewController(from: viewController)
-    }
-    
-    private func getPreviousViewController(from viewController: UIViewController) -> UIViewController? {
-        guard let index = pages.firstIndex(of: viewController), index - 1 >= 0 else { return nil }
-        currentVC = pages[index - 1]
-        return pages[index - 1]
-    }
-    
-    private func getNextViewController(from viewController: UIViewController) -> UIViewController? {
-        guard let index = pages.firstIndex(of: viewController), index + 1 < pages.count else { return nil }
-        currentVC = pages[index + 1]
-        return pages[index + 1]
-    }
-    
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return pages.count
-    }
-    
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return pages.firstIndex(of: self.currentVC) ?? 0
+        page.delegate = delegate
     }
 }
 
 extension OnboardingContainerViewController {
     private func style() {
+        
+        scrollView.delaysContentTouches = false
+        scrollView.delegate = self
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        view.addSubview(scrollView)
+        
+        stackViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        stackViewContainer.distribution = .equalSpacing
+        stackViewContainer.axis = .horizontal
+        scrollView.addSubview(stackViewContainer)
+        
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.setTitle("Close", for: [])
         closeButton.addTarget(self, action: #selector(didTapClose), for: .primaryActionTriggered)
         closeButton.tintColor = .label
-        
+        closeButton.setTitleColor(.systemBackground, for: [])
+        closeButton.configuration = .filled()
         view.addSubview(closeButton)
     }
     
     private func setup() {
-        addChild(pageViewController)
-        view.addSubview(pageViewController.view)
-        pageViewController.didMove(toParent: self)
-        
-        pageViewController.dataSource = self
-        pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: pageViewController.view.topAnchor),
-            view.leadingAnchor.constraint(equalTo: pageViewController.view.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: pageViewController.view.trailingAnchor),
-            view.bottomAnchor.constraint(equalTo: pageViewController.view.bottomAnchor),
+          scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+          scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+          scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+          scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
-        pageViewController.setViewControllers([pages.first!], direction: .forward, animated: false, completion: nil)
-        currentVC = pages.first!
+        NSLayoutConstraint.activate([
+            stackViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackViewContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            stackViewContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            stackViewContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
+        ])
+        
+        pages.forEach { [weak self] myView in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.stackViewContainer.addArrangedSubview(myView)
+            myView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                myView.widthAnchor.constraint(equalTo: strongSelf.view.widthAnchor),
+                myView.heightAnchor.constraint(equalTo: strongSelf.view.heightAnchor)
+            ])
+        }
     }
     
     private func layout() {
@@ -127,4 +118,8 @@ extension OnboardingContainerViewController {
     @objc private func didTapClose() {
         delegate?.didFinishOnboarding()
     }
+}
+
+extension OnboardingContainerViewController: UIScrollViewDelegate {
+    
 }

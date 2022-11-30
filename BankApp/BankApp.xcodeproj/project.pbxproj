@@ -13,9 +13,14 @@
 		3AB3AB1A293251320004C554 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AB3AB18293251320004C554 /* LaunchScreen.storyboard */; };
 		3AB3AB252932562A0004C554 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB242932562A0004C554 /* LoginView.swift */; };
 		3AB3AB282933C67A0004C554 /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB272933C67A0004C554 /* OnboardingContainerViewController.swift */; };
-		3AB3AB2A2933DD7C0004C554 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB292933DD7C0004C554 /* OnboardingViewController.swift */; };
+		3AB3AB2A2933DD7C0004C554 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB292933DD7C0004C554 /* OnboardingView.swift */; };
 		3AB3AB2C2933F55D0004C554 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB2B2933F55D0004C554 /* DummyViewController.swift */; };
 		3AB3AB2F2933FAF20004C554 /* LocalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB2E2933FAF20004C554 /* LocalState.swift */; };
+		3AB3AB312936ABE10004C554 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB302936ABE10004C554 /* UIViewController+Utils.swift */; };
+		3AB3AB332936AEAA0004C554 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB322936AEAA0004C554 /* MainViewController.swift */; };
+		3AB3AB352936AF160004C554 /* AccountSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB342936AF160004C554 /* AccountSummaryViewController.swift */; };
+		3AB3AB372936AF200004C554 /* MoveMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB362936AF200004C554 /* MoveMoneyViewController.swift */; };
+		3AB3AB392936AF280004C554 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB382936AF280004C554 /* MoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,9 +32,14 @@
 		3AB3AB1B293251320004C554 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AB3AB242932562A0004C554 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3AB3AB272933C67A0004C554 /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
-		3AB3AB292933DD7C0004C554 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		3AB3AB292933DD7C0004C554 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		3AB3AB2B2933F55D0004C554 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		3AB3AB2E2933FAF20004C554 /* LocalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalState.swift; sourceTree = "<group>"; };
+		3AB3AB302936ABE10004C554 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
+		3AB3AB322936AEAA0004C554 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		3AB3AB342936AF160004C554 /* AccountSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryViewController.swift; sourceTree = "<group>"; };
+		3AB3AB362936AF200004C554 /* MoveMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveMoneyViewController.swift; sourceTree = "<group>"; };
+		3AB3AB382936AF280004C554 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +72,15 @@
 		3AB3AB0C293251310004C554 /* BankApp */ = {
 			isa = PBXGroup;
 			children = (
-				3AB3AB2D2933FAE50004C554 /* Utils */,
-				3AB3AB262933C60B0004C554 /* Onboarding */,
-				3AB3AB232932560A0004C554 /* Login */,
 				3AB3AB0D293251310004C554 /* AppDelegate.swift */,
+				3AB3AB232932560A0004C554 /* Login */,
+				3AB3AB262933C60B0004C554 /* Onboarding */,
+				3AB3AB2D2933FAE50004C554 /* Utils */,
 				3AB3AB212932559F0004C554 /* Files */,
+				3AB3AB322936AEAA0004C554 /* MainViewController.swift */,
+				3AB3AB342936AF160004C554 /* AccountSummaryViewController.swift */,
+				3AB3AB362936AF200004C554 /* MoveMoneyViewController.swift */,
+				3AB3AB382936AF280004C554 /* MoreViewController.swift */,
 			);
 			path = BankApp;
 			sourceTree = "<group>";
@@ -95,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				3AB3AB272933C67A0004C554 /* OnboardingContainerViewController.swift */,
-				3AB3AB292933DD7C0004C554 /* OnboardingViewController.swift */,
+				3AB3AB292933DD7C0004C554 /* OnboardingView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -104,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				3AB3AB2E2933FAF20004C554 /* LocalState.swift */,
+				3AB3AB302936ABE10004C554 /* UIViewController+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -178,11 +193,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AB3AB312936ABE10004C554 /* UIViewController+Utils.swift in Sources */,
 				3AB3AB252932562A0004C554 /* LoginView.swift in Sources */,
 				3AB3AB2F2933FAF20004C554 /* LocalState.swift in Sources */,
 				3AB3AB2C2933F55D0004C554 /* DummyViewController.swift in Sources */,
 				3AB3AB12293251310004C554 /* LoginViewController.swift in Sources */,
-				3AB3AB2A2933DD7C0004C554 /* OnboardingViewController.swift in Sources */,
+				3AB3AB2A2933DD7C0004C554 /* OnboardingView.swift in Sources */,
+				3AB3AB332936AEAA0004C554 /* MainViewController.swift in Sources */,
+				3AB3AB372936AF200004C554 /* MoveMoneyViewController.swift in Sources */,
+				3AB3AB352936AF160004C554 /* AccountSummaryViewController.swift in Sources */,
+				3AB3AB392936AF280004C554 /* MoreViewController.swift in Sources */,
 				3AB3AB0E293251310004C554 /* AppDelegate.swift in Sources */,
 				3AB3AB282933C67A0004C554 /* OnboardingContainerViewController.swift in Sources */,
 			);
@@ -252,7 +272,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -306,7 +326,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

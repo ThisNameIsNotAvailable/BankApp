@@ -7,14 +7,21 @@
 
 import UIKit
 
+let appColor: UIColor = .systemTeal
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let loginVC = LoginViewController()
     let onboardingVC = OnboardingContainerViewController()
+    let mainVC = MainViewController()
     let dummyVC = DummyViewController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        let pageControl = UIPageControl.appearance()
+        pageControl.currentPageIndicatorTintColor = .label
+        pageControl.pageIndicatorTintColor = .tertiaryLabel
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
@@ -31,7 +38,7 @@ extension AppDelegate: LoginViewControllerDelegate {
         if !LocalState.hasOnboarded {
             setRootViewController(vc: onboardingVC)
         } else {
-            setRootViewController(vc: dummyVC)
+            setRootViewController(vc: mainVC)
         }
     }
 }
@@ -39,7 +46,7 @@ extension AppDelegate: LoginViewControllerDelegate {
 extension AppDelegate: OnboardingContainerViewControllerDelegate {
     func didFinishOnboarding() {
         LocalState.hasOnboarded = true
-        setRootViewController(vc: dummyVC)
+        setRootViewController(vc: mainVC)
     }
 }
 
