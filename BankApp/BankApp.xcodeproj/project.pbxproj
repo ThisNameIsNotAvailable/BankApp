@@ -73,12 +73,12 @@
 			isa = PBXGroup;
 			children = (
 				3AB3AB0D293251310004C554 /* AppDelegate.swift */,
+				3AB3AB322936AEAA0004C554 /* MainViewController.swift */,
 				3AB3AB232932560A0004C554 /* Login */,
 				3AB3AB262933C60B0004C554 /* Onboarding */,
+				3AB3AB3A2937AC000004C554 /* AccountSummary */,
 				3AB3AB2D2933FAE50004C554 /* Utils */,
 				3AB3AB212932559F0004C554 /* Files */,
-				3AB3AB322936AEAA0004C554 /* MainViewController.swift */,
-				3AB3AB342936AF160004C554 /* AccountSummaryViewController.swift */,
 				3AB3AB362936AF200004C554 /* MoveMoneyViewController.swift */,
 				3AB3AB382936AF280004C554 /* MoreViewController.swift */,
 			);
@@ -121,6 +121,14 @@
 				3AB3AB302936ABE10004C554 /* UIViewController+Utils.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		3AB3AB3A2937AC000004C554 /* AccountSummary */ = {
+			isa = PBXGroup;
+			children = (
+				3AB3AB342936AF160004C554 /* AccountSummaryViewController.swift */,
+			);
+			path = AccountSummary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
