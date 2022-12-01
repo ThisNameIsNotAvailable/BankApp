@@ -23,6 +23,7 @@
 		3AB3AB392936AF280004C554 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB382936AF280004C554 /* MoreViewController.swift */; };
 		3AB3AB3C2937B2420004C554 /* AccountSummaryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB3B2937B2420004C554 /* AccountSummaryHeaderView.swift */; };
 		3AB3AB3E2937B2620004C554 /* AccountSummaryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB3AB3D2937B2620004C554 /* AccountSummaryHeaderView.xib */; };
+		3AB3AB422937DFD00004C554 /* AccountSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3AB412937DFD00004C554 /* AccountSummaryCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		3AB3AB382936AF280004C554 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		3AB3AB3B2937B2420004C554 /* AccountSummaryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryHeaderView.swift; sourceTree = "<group>"; };
 		3AB3AB3D2937B2620004C554 /* AccountSummaryHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountSummaryHeaderView.xib; sourceTree = "<group>"; };
+		3AB3AB412937DFD00004C554 /* AccountSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,10 +133,27 @@
 			isa = PBXGroup;
 			children = (
 				3AB3AB342936AF160004C554 /* AccountSummaryViewController.swift */,
+				3AB3AB3F2937DF8C0004C554 /* Header */,
+				3AB3AB402937DF9E0004C554 /* Cells */,
+			);
+			path = AccountSummary;
+			sourceTree = "<group>";
+		};
+		3AB3AB3F2937DF8C0004C554 /* Header */ = {
+			isa = PBXGroup;
+			children = (
 				3AB3AB3B2937B2420004C554 /* AccountSummaryHeaderView.swift */,
 				3AB3AB3D2937B2620004C554 /* AccountSummaryHeaderView.xib */,
 			);
-			path = AccountSummary;
+			path = Header;
+			sourceTree = "<group>";
+		};
+		3AB3AB402937DF9E0004C554 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3AB3AB412937DFD00004C554 /* AccountSummaryCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AB3AB422937DFD00004C554 /* AccountSummaryCell.swift in Sources */,
 				3AB3AB3C2937B2420004C554 /* AccountSummaryHeaderView.swift in Sources */,
 				3AB3AB312936ABE10004C554 /* UIViewController+Utils.swift in Sources */,
 				3AB3AB252932562A0004C554 /* LoginView.swift in Sources */,
