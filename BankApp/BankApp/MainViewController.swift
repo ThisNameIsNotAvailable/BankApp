@@ -8,7 +8,7 @@
 import UIKit
 
 class MainViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -30,6 +30,7 @@ class MainViewController: UITabBarController {
         
         summaryNC.navigationBar.barTintColor = appColor
         hideNavigationBarLine(summaryNC.navigationBar)
+        
         
         viewControllers = [summaryNC, moneyNC, moreNC]
         

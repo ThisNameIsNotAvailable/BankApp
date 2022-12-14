@@ -13,8 +13,6 @@ class DummyViewController: UIViewController {
     private let label = UILabel()
     private let logoutButton = UIButton(type: .system)
     
-    weak var delegate: LogoutDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -37,7 +35,7 @@ extension DummyViewController {
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         logoutButton.setTitle("Log Out", for: [])
 //        logoutButton.configuration = .filled()
-        logoutButton.addTarget(self, action: #selector(didTapLogOut), for: .touchUpInside)
+//        logoutButton.addTarget(self, action: #selector(didTapLogOut), for: .touchUpInside)
     }
     
     private func layout() {
@@ -49,11 +47,5 @@ extension DummyViewController {
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-    }
-}
-
-extension DummyViewController {
-    @objc private func didTapLogOut(sender: UIButton) {
-        delegate?.didLogout()
     }
 }
