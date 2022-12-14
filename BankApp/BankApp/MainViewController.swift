@@ -28,7 +28,7 @@ class MainViewController: UITabBarController {
         let moneyNC = UINavigationController(rootViewController: moneyVC)
         let moreNC = UINavigationController(rootViewController: moreVC)
         
-        summaryNC.navigationBar.tintColor = appColor
+        summaryNC.navigationBar.barTintColor = appColor
         hideNavigationBarLine(summaryNC.navigationBar)
         
         viewControllers = [summaryNC, moneyNC, moreNC]

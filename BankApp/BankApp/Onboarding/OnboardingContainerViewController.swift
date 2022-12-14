@@ -117,6 +117,7 @@ extension OnboardingContainerViewController {
 extension OnboardingContainerViewController {
     @objc private func didTapClose() {
         delegate?.didFinishOnboarding()
+        
     }
 }
 
