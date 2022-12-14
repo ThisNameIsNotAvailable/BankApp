@@ -16,6 +16,7 @@ class OnboardingContainerViewController: UIViewController {
     var pages = [UIView]()
     
     private let closeButton = UIButton(type: .system)
+    private let pageControl = UIPageControl()
     
     weak var delegate: OnboardingContainerViewControllerDelegate?
     
@@ -60,6 +61,16 @@ extension OnboardingContainerViewController {
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         view.addSubview(scrollView)
+        
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = pages.count
+        pageControl.backgroundStyle = .prominent
+        pageControl.currentPageIndicatorTintColor = .label
+        pageControl.allowsContinuousInteraction = true
+        
+        pageControl.addTarget(self, action: #selector(changePage), for: .valueChanged)
+        view.addSubview(pageControl)
         
         stackViewContainer.translatesAutoresizingMaskIntoConstraints = false
         stackViewContainer.distribution = .equalSpacing
@@ -108,8 +119,16 @@ extension OnboardingContainerViewController {
         NSLayoutConstraint.activate([
             // Close button
             closeButton.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2),
-            closeButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2)
+            closeButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            
+            pageControl.heightAnchor.constraint(equalToConstant: 30),
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: pageControl.bottomAnchor, multiplier: 2)
         ])
+    }
+    
+    @objc private func changePage() {
+        scrollView.setContentOffset(CGPoint(x: pageControl.currentPage * Int(view.frame.width), y: 0), animated: true)
     }
 }
 
@@ -122,5 +141,14 @@ extension OnboardingContainerViewController {
 }
 
 extension OnboardingContainerViewController: UIScrollViewDelegate {
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        if scrollView.contentOffset.x == 0{
+            pageControl.currentPage = 0
+        }else if scrollView.contentOffset.x == view.frame.width {
+            pageControl.currentPage = 1
+        } else if scrollView.contentOffset.x == 2 * view.frame.width {
+            pageControl.currentPage = 2
+        }
+    }
 }

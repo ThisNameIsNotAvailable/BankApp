@@ -17,36 +17,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        let pageControl = UIPageControl.appearance()
-        pageControl.currentPageIndicatorTintColor = .label
-        pageControl.pageIndicatorTintColor = .tertiaryLabel
-        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
         loginVC.delegate = self
         onboardingVC.delegate = self
+        displayLogin()
+        return true
+    }
+    
+    private func displayLogin() {
+        setRootViewController(vc: loginVC)
+    }
+    
+    private func displayNextScreen() {
+        if LocalState.hasOnboarded {
+            prepMainView()
+            setRootViewController(vc: mainVC)
+        } else {
+            setRootViewController(vc: onboardingVC)
+        }
+    }
+    
+    private func prepMainView() {
         mainVC.setStatusBar()
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().backgroundColor = appColor
-        window?.rootViewController = loginVC
-        return true
     }
 }
 
 extension AppDelegate: LoginViewControllerDelegate {
     func didLogin() {
-        if !LocalState.hasOnboarded {
-            setRootViewController(vc: onboardingVC)
-        } else {
-            setRootViewController(vc: mainVC)
-        }
+        displayNextScreen()
     }
 }
 
 extension AppDelegate: OnboardingContainerViewControllerDelegate {
     func didFinishOnboarding() {
         LocalState.hasOnboarded = true
+        prepMainView()
         setRootViewController(vc: mainVC)
     }
 }
