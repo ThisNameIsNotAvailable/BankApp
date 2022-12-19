@@ -39,6 +39,9 @@ class AccountSummaryViewController: UIViewController {
     }
     
     @objc private func refreshed() {
+        isLoaded = false
+        setupSkeletons()
+        tableView.reloadData()
         fetchData()
     }
 }
@@ -121,15 +124,12 @@ extension AccountSummaryViewController: UITableViewDataSource, UITableViewDelega
 extension AccountSummaryViewController {
     private func fetchData() {
         let group = DispatchGroup()
-        
+        let userId = String(Int.random(in: 1...3))
         group.enter()
-        fetchProfile(forUserId: "1") { result in
+        fetchProfile(forUserId: userId) { result in
             switch result {
             case .success(let profile):
                 self.profile = profile
-                DispatchQueue.main.async {
-                    self.configureTableHeaderView(with: profile)
-                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -137,13 +137,10 @@ extension AccountSummaryViewController {
         }
 
         group.enter()
-        fetchAccounts(forUserId: "1") { result in
+        fetchAccounts(forUserId: userId) { result in
             switch result {
             case .success(let accounts):
                 self.accounts = accounts
-                DispatchQueue.main.async {
-                    self.configureTableViewCells(with: accounts)
-                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -151,11 +148,17 @@ extension AccountSummaryViewController {
         }
         
         group.notify(queue: .main) {
-            self.tableView.reloadData()
-            self.isLoaded = true
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) { [weak self] in
+                self?.isLoaded = true
+                guard let profile = self?.profile, let accounts = self?.accounts else {
+                    return
+                }
+                self?.configureTableHeaderView(with: profile)
+                self?.configureTableViewCells(with: accounts)
+                self?.tableView.reloadData()
                 self?.tableView.refreshControl?.endRefreshing()
             }
+            
         }
     }
     
