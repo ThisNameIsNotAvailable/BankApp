@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A10EF1E2950F23C00351E92 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A10EF1D2950F23C00351E92 /* ProfileManager.swift */; };
+		3A10EF202950F3FD00351E92 /* AccountSummaryVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A10EF1F2950F3FD00351E92 /* AccountSummaryVCTests.swift */; };
 		3A14F598294A0926003FFF52 /* CurrencyFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A14F597294A0926003FFF52 /* CurrencyFormatterTests.swift */; };
 		3A14F59A294A3396003FFF52 /* NSNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A14F599294A3396003FFF52 /* NSNotificationName.swift */; };
 		3A14F59C294A35D9003FFF52 /* UITextFieldSecureToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A14F59B294A35D9003FFF52 /* UITextFieldSecureToggle.swift */; };
@@ -49,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A10EF1D2950F23C00351E92 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
+		3A10EF1F2950F3FD00351E92 /* AccountSummaryVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryVCTests.swift; sourceTree = "<group>"; };
 		3A14F58E294A080E003FFF52 /* BankAppUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BankAppUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A14F597294A0926003FFF52 /* CurrencyFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTests.swift; sourceTree = "<group>"; };
 		3A14F599294A3396003FFF52 /* NSNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationName.swift; sourceTree = "<group>"; };
@@ -101,6 +105,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A10EF1C2950F22400351E92 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				3A10EF1D2950F23C00351E92 /* ProfileManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		3A14F58F294A080E003FFF52 /* BankAppUnitTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +143,7 @@
 			children = (
 				3A14F5AA294B7B90003FFF52 /* ProfileTests.swift */,
 				3A14F5AC294B7C60003FFF52 /* AccountsTest.swift */,
+				3A10EF1F2950F3FD00351E92 /* AccountSummaryVCTests.swift */,
 			);
 			path = "Account Summary";
 			sourceTree = "<group>";
@@ -220,6 +233,7 @@
 				3A14F5A6294B727E003FFF52 /* AccountSummaryVC+Networking.swift */,
 				3AB3AB3F2937DF8C0004C554 /* Header */,
 				3AB3AB402937DF9E0004C554 /* Cells */,
+				3A10EF1C2950F22400351E92 /* Networking */,
 			);
 			path = AccountSummary;
 			sourceTree = "<group>";
@@ -346,6 +360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A14F5AD294B7C60003FFF52 /* AccountsTest.swift in Sources */,
+				3A10EF202950F3FD00351E92 /* AccountSummaryVCTests.swift in Sources */,
 				3A14F598294A0926003FFF52 /* CurrencyFormatterTests.swift in Sources */,
 				3A14F5AB294B7B90003FFF52 /* ProfileTests.swift in Sources */,
 			);
@@ -374,6 +389,7 @@
 				3AB3AB2A2933DD7C0004C554 /* OnboardingView.swift in Sources */,
 				3AB3AB332936AEAA0004C554 /* MainViewController.swift in Sources */,
 				3AB3AB372936AF200004C554 /* MoveMoneyViewController.swift in Sources */,
+				3A10EF1E2950F23C00351E92 /* ProfileManager.swift in Sources */,
 				3AB3AB352936AF160004C554 /* AccountSummaryViewController.swift in Sources */,
 				3AB3AB392936AF280004C554 /* MoreViewController.swift in Sources */,
 				3AB3AB0E293251310004C554 /* AppDelegate.swift in Sources */,
