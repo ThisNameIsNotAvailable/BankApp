@@ -12,6 +12,7 @@ import UIKit
 class AccountSummaryViewController: UIViewController {
     
     private let tableView = UITableView()
+    let refreshControl = UIRefreshControl()
     private let headerView = AccountSummaryHeaderView(frame: .zero)
     private var accountCellViewModels = [AccountSummaryCell.ViewModel]()
     lazy var logoutButton: UIBarButtonItem = {
@@ -21,6 +22,7 @@ class AccountSummaryViewController: UIViewController {
     }()
     var profile: Profile?
     var accounts = [Account]()
+    var isLoaded = false
     
     var headerViewModel = AccountSummaryHeaderView.ViewModel(welcomeMessage: "Welcome", name: "", date: Date())
     
@@ -29,19 +31,38 @@ class AccountSummaryViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         setup()
-        setupTableHeaderView()
-        fetchDataAndLoadViews()
+        
     }
     
     @objc private func didTapLogOut() {
         NotificationCenter.default.post(Notification(name: .logout))
+    }
+    
+    @objc private func refreshed() {
+        fetchData()
     }
 }
 
 extension AccountSummaryViewController {
     private func setup() {
         setUpTableView()
+        setupTableHeaderView()
+        setupRefreshControl()
+        setupSkeletons()
+        fetchData()
         navigationItem.rightBarButtonItem = logoutButton
+    }
+    
+    private func setupRefreshControl() {
+        refreshControl.tintColor = appColor
+        refreshControl.addTarget(self, action: #selector(refreshed), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    private func setupSkeletons() {
+        let row = Account.makeSkeleton()
+        accounts = Array(repeating: row, count: 10)
+        configureTableViewCells(with: accounts)
     }
     
     private func setUpTableView() {
@@ -49,7 +70,8 @@ extension AccountSummaryViewController {
         tableView.backgroundColor = appColor
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(AccountSummaryCell.self, forCellReuseIdentifier: "AccountSummaryCell")
+        tableView.register(AccountSummaryCell.self, forCellReuseIdentifier: AccountSummaryCell.identifier)
+        tableView.register(SkeletonCell.self, forCellReuseIdentifier: SkeletonCell.reuseID)
         tableView.rowHeight = AccountSummaryCell.height
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -76,43 +98,63 @@ extension AccountSummaryViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.identifier, for: indexPath) as? AccountSummaryCell else {
+        if isLoaded {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.identifier, for: indexPath) as? AccountSummaryCell else {
+                return UITableViewCell()
+            }
+            
+            cell.configure(accountCellViewModels[indexPath.row])
+            
+            return cell
+        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SkeletonCell.reuseID, for: indexPath) as? SkeletonCell else {
             return UITableViewCell()
         }
         
-        cell.configure(accountCellViewModels[indexPath.row])
-        
         return cell
+        
     }
+        
 }
 
 // MARK: - Networking
 extension AccountSummaryViewController {
-    private func fetchDataAndLoadViews() {
+    private func fetchData() {
+        let group = DispatchGroup()
         
+        group.enter()
         fetchProfile(forUserId: "1") { result in
             switch result {
             case .success(let profile):
                 self.profile = profile
                 DispatchQueue.main.async {
                     self.configureTableHeaderView(with: profile)
-                    self.tableView.reloadData()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
+            group.leave()
         }
 
+        group.enter()
         fetchAccounts(forUserId: "1") { result in
             switch result {
             case .success(let accounts):
                 self.accounts = accounts
                 DispatchQueue.main.async {
                     self.configureTableViewCells(with: accounts)
-                    self.tableView.reloadData()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
+            }
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            self.tableView.reloadData()
+            self.isLoaded = true
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) { [weak self] in
+                self?.tableView.refreshControl?.endRefreshing()
             }
         }
     }
