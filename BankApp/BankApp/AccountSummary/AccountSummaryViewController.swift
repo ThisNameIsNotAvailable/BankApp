@@ -131,7 +131,9 @@ extension AccountSummaryViewController {
             case .success(let profile):
                 self.profile = profile
             case .failure(let error):
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.displayError(error)
+                }
             }
             group.leave()
         }
@@ -142,7 +144,9 @@ extension AccountSummaryViewController {
             case .success(let accounts):
                 self.accounts = accounts
             case .failure(let error):
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.displayError(error)
+                }
             }
             group.leave()
         }
@@ -162,6 +166,15 @@ extension AccountSummaryViewController {
         }
     }
     
+    private func displayError(_ error: NetworkError) {
+        switch error {
+        case .serverError:
+            self.showErrorAlert(title: "Server Error", message: "Ensure you are connected to the internet. Please try again.")
+        case .decodingError:
+            self.showErrorAlert(title: "Decoding Error", message: "We could not process your request. Please try again.")
+        }
+    }
+    
     private func configureTableHeaderView(with profile: Profile) {
         let vm = AccountSummaryHeaderView.ViewModel(welcomeMessage: "Good morning,",
                                                     name: profile.firstName,
@@ -173,5 +186,15 @@ extension AccountSummaryViewController {
         accountCellViewModels = accounts.compactMap({ account in
             return AccountSummaryCell.ViewModel(accountType: account.type, accountName: account.name, balance: account.amount)
         })
+    }
+    
+    private func showErrorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
 }
